@@ -1,5 +1,5 @@
 
-export type setLoggedUserPayloadType = {
+export type setAuthUserPayloadType = {
     type: string
     payload: {
         userId: number,

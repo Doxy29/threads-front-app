@@ -1,24 +1,38 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {setLoggedUserPayloadType} from "src/types/dispachPayloads.ts";
+import {setAuthUserPayloadType} from "src/types/dispachPayloads.ts";
+import {signUpFormType} from "src/CommonComponents/Authentication/SignUp.tsx";
 
 export const userSlice = createSlice({
-    name: "userState",
+    name: "user",
     initialState: {
-        loggedUser:JSON.parse(localStorage.getItem("user") ?? "undefined")
+        user:JSON.parse(localStorage.getItem("user") ?? "null"),
+        isUserDataLoading: false,
     },
     reducers:{
-        setLoggedUser(state, action: setLoggedUserPayloadType) {
-            state.loggedUser = action.payload
+        signUpCall(state, action: {type:string, payload?:signUpFormType}){
+            state.isUserDataLoading = true
+        },
+        signInCall(state){
+            state.isUserDataLoading = true
+        },
+
+        setAuthUser(state, action: setAuthUserPayloadType){
+            console.log(action, "actionaction")
+            state.user = action.payload
+            state.isUserDataLoading = true
         },
         resetLoggedUser(state) {
-            state.loggedUser = undefined;
-        }
+            state.user = undefined;
+            state.isUserDataLoading = false;
+        },
     }
 })
 
 export const {
-    setLoggedUser,
-    resetLoggedUser
+    signUpCall,
+    signInCall,
+    setAuthUser,
+    resetLoggedUser,
 } = userSlice.actions;
 
 export default userSlice.reducer ;

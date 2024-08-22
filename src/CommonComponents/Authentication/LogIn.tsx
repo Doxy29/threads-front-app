@@ -2,6 +2,7 @@
 import React, {FC, useState} from "react";
 import {Box, Button, Stack, TextField} from "@mui/material";
 import {login} from "src/Services/AuthenticationService.ts";
+import {useSelector, useDispatch} from "react-redux";
 
 export type logInFormType = {
     userOrEmail: string,
@@ -13,7 +14,7 @@ type Props = {
 }
 
 const LogIn: FC<Props> = () => {
-
+    const dispatch = useDispatch();
     const [logInForm, setLogInForm ] = useState<logInFormType>({
         userOrEmail:"",
         password:""})
@@ -51,7 +52,7 @@ const LogIn: FC<Props> = () => {
                     />
                 </Stack>
             </Box>
-            <Button variant="contained" onClick={()=>login(logInForm)}> Log In! </Button>
+            <Button variant="contained" onClick={()=>dispatch(getCars())}> Log In! </Button>
         </>
     );
 };

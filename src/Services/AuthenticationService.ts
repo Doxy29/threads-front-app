@@ -2,9 +2,8 @@ import MyAxios from "src/Services/index.ts";
 import {ValidateEmail} from "src/Utilities";
 import {logInFormType} from "src/CommonComponents/Authentication/LogIn.tsx";
 import {signUpFormType} from "src/CommonComponents/Authentication/SignUp.tsx";
-import {useDispatch} from "react-redux";
-import {setLoggedUserPayloadType} from "src/types/dispachPayloads.ts";
-import {useHistory} from "react-router-dom";
+//import {useDispatch} from "react-redux";
+//import {setLoggedUserPayloadType} from "src/types/dispachPayloads.ts";
 
 export const login = (logInForm: logInFormType)=>{
 
@@ -29,14 +28,14 @@ export const login = (logInForm: logInFormType)=>{
 
 
 export const signup = (signUpForm: signUpFormType)=>{
-    const dispatch = useDispatch()
+    //const dispatch = useDispatch()
 
-    MyAxios.post("https://localhost:44361/api/Authentication/signup",signUpForm ).then(res=>{
+    MyAxios.post("https://localhost:5139/api/Authentication/signup",signUpForm ).then(res=>{
 
 
         console.log(res)
         const data = res.data
-        const user: setLoggedUserPayloadType = {
+        const user = {
             userId: data.userId,
             userAlias: data.userAlias,
             userName: data.userName,
@@ -46,10 +45,10 @@ export const signup = (signUpForm: signUpFormType)=>{
 
         localStorage.setItem("user", JSON.stringify(user))
         localStorage.setItem("key", data.auth.token)
-        dispatch({
-            type: "setLoggedUser",
-            payload: user
-        })
+        // dispatch({
+        //     type: "setLoggedUser",
+        //     payload: user
+        // })
 
     }).catch(err=>{
         console.log(err)

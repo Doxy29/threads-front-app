@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Box, Button, Stack, TextField} from "@mui/material";
-import {signup} from "src/Services/AuthenticationService.ts";
+import {signUpCall} from "src/state/userState.ts";
+import {useDispatch} from "react-redux";
 
 export type signUpFormType = {
     userName: string,
@@ -17,6 +18,8 @@ type Props = {
 
 const SignUp: FC<Props> = () => {
 
+    const dispatch = useDispatch();
+
     const [signUpForm, setSignUpForm] = useState<signUpFormType>({
         userName: "",
         userSurname: "",
@@ -26,7 +29,6 @@ const SignUp: FC<Props> = () => {
         password2: "",
 
     })
-
 
     const onFormChange = ({currentTarget}:  React.ChangeEvent<HTMLTextAreaElement>) => {
         setSignUpForm({
@@ -53,7 +55,7 @@ const SignUp: FC<Props> = () => {
                     <TextField required id="password2" label="Repeat Password" variant={"outlined"} value={signUpForm.password2} onChange={onFormChange}/>
                 </Stack>
             </Box>
-            <Button variant="contained" onClick={()=>signup(signUpForm)}>Sign up!</Button>
+            <Button variant="contained" onClick={()=>dispatch(signUpCall(signUpForm))}>Sign up!</Button>
         </>
     );
 };
