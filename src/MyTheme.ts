@@ -1,50 +1,52 @@
-﻿import { indigo, red, teal } from '@mui/material/colors';
-import {createTheme} from "@mui/material";
+﻿import {indigo, red, teal} from '@mui/material/colors';
+import {Components, createTheme, Theme} from "@mui/material";
 
-const MuiPaper:any = {
+const MuiPaper: Components<Theme>["MuiPaper"] = {
     defaultProps: {
         elevation: 3,
     },
     styleOverrides:{
         root:{
-            boxSizing: "border-box"
+
         }
     }
 
 }
-const MuiCard:any = {
+const MuiCard: Components<Theme>["MuiCard"] = {
     defaultProps: {
         elevation: 3,
     },
     styleOverrides:{
         root:{
-            boxSizing: "border-box"
+
         }
     }
 
 }
 
-const MuiContainer:any = {
+const MuiContainer: Components<Theme>["MuiContainer"] = {
     styleOverrides:{
         root:{
-            boxSizing: "border-box"
         }
     }
 }
 
-const MuiTextField :any = {
-    styleOverrides:{
-
-    }
+const MuiTextField : Components<Theme>["MuiTextField"] = {
+    defaultProps:{
+        size:"small",
+        InputProps:{
+            sx: {borderRadius:"1000px"}
+        }
+    },
 }
 
 export default createTheme({
     
     palette: {
-        mode: 'dark',
+        mode: 'light',
         primary: indigo,
         secondary: teal,
-        error: red,
+        error: red
     },
     components: {
         MuiCard,
@@ -54,7 +56,7 @@ export default createTheme({
     },
     spacing: 4,
     shape:{
-        borderRadius:10
+      borderRadius: 5
     },
     typography: {
         button: {

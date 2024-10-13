@@ -1,29 +1,42 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {setAuthUserPayloadType} from "src/types/dispachPayloads.ts";
-import {signUpFormType} from "src/CommonComponents/Authentication/SignUp.tsx";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {signUpFormType, userType, signInFormType} from "src/types";
+
+export type userSliceType = {
+    user?: userType,
+    loading: boolean
+}
+
+const getLocalStorageUser = ()=>{
+    const localUser = localStorage.getItem("user");
+    return localUser ? JSON.parse(localUser) as userType : undefined
+}
+
+const initialState:userSliceType = {
+    user:getLocalStorageUser(),
+    loading: false,
+}
 
 export const userSlice = createSlice({
     name: "user",
-    initialState: {
-        user:JSON.parse(localStorage.getItem("user") ?? "null"),
-        isUserDataLoading: false,
-    },
+    initialState,
     reducers:{
-        signUpCall(state, action: {type:string, payload?:signUpFormType}){
-            state.isUserDataLoading = true
+        signUpCall(state, action: PayloadAction<signUpFormType>){
+            state.loading = !!action
         },
-        signInCall(state){
-            state.isUserDataLoading = true
+        signInCall(state, action: PayloadAction<signInFormType>){
+            state.loading = !!action
         },
 
-        setAuthUser(state, action: setAuthUserPayloadType){
-            console.log(action, "actionaction")
-            state.user = action.payload
-            state.isUserDataLoading = true
+        setAuthUser(state, action: PayloadAction<{jwtToken:string, user:userType }> ){
+            localStorage.setItem("user", JSON.stringify(action.payload.user))
+            localStorage.setItem("jwtToken", `bearen ${action.payload.jwtToken}`)
+
+            state.user = action.payload.user
+            state.loading = false
         },
         resetLoggedUser(state) {
             state.user = undefined;
-            state.isUserDataLoading = false;
+            state.loading = false;
         },
     }
 })

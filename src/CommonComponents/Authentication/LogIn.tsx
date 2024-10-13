@@ -1,13 +1,10 @@
 ﻿// @flow 
 import React, {FC, useState} from "react";
 import {Box, Button, Stack, TextField} from "@mui/material";
-import {login} from "src/Services/AuthenticationService.ts";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
+import {signInFormType} from "src/types";
+import {signInCall} from "src/state/userState.ts";
 
-export type logInFormType = {
-    userOrEmail: string,
-    password: string,
-}
 
 type Props = {
 
@@ -15,13 +12,14 @@ type Props = {
 
 const LogIn: FC<Props> = () => {
     const dispatch = useDispatch();
-    const [logInForm, setLogInForm ] = useState<logInFormType>({
-        userOrEmail:"",
+    const [signInForm, setSignInForm ] = useState<signInFormType>({
+        userAlias:"",
+        email:"",
         password:""})
 
     const onFormChange = ({currentTarget}:  React.ChangeEvent<HTMLTextAreaElement>) => {
-        setLogInForm({
-            ...logInForm,
+        setSignInForm({
+            ...signInForm,
             [currentTarget.id]: currentTarget.value,
         })
     }
@@ -34,11 +32,11 @@ const LogIn: FC<Props> = () => {
             <Box component={"form"}>
                 <Stack gap={3}>
                     <TextField
-                        id={"userOrEmail"}
+                        id={"userAlias"}
                         required
                         label="UserName or Email"
                         variant={"outlined"}
-                        value={logInForm.userOrEmail}
+                        value={signInForm.userAlias}
                         onChange={onFormChange}
                     />
                     <TextField
@@ -47,12 +45,12 @@ const LogIn: FC<Props> = () => {
                         required
                         label="password"
                         variant={"outlined"}
-                        value={logInForm.password}
+                        value={signInForm.password}
                         onChange={onFormChange}
                     />
                 </Stack>
             </Box>
-            <Button variant="contained" onClick={()=>dispatch(getCars())}> Log In! </Button>
+            <Button variant="contained" color={"error"} onClick={()=>dispatch(signInCall(signInForm))}> Log In! </Button>
         </>
     );
 };

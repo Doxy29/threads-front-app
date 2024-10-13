@@ -2,15 +2,8 @@ import React, {FC, useState} from 'react';
 import {Box, Button, Stack, TextField} from "@mui/material";
 import {signUpCall} from "src/state/userState.ts";
 import {useDispatch} from "react-redux";
-
-export type signUpFormType = {
-    userName: string,
-    userSurname: string,
-    userAlias: string,
-    email: string,
-    password1: string,
-    password2: string,
-}
+import {signUpFormType} from "src/types";
+import MyAxios from "src/Services";
 
 type Props = {
 
@@ -37,7 +30,13 @@ const SignUp: FC<Props> = () => {
         })
     }
 
-
+    const test= ()=>{
+        MyAxios.get("https://localhost:44361/api/Authentication/auth").then(res=>{
+                console.log(res, "auth res")
+            }).catch(err=> {
+                console.log(err, "auth err")
+        })
+    }
 
 
     return (
@@ -45,7 +44,7 @@ const SignUp: FC<Props> = () => {
             <Box component={"form"}>
                 <Stack gap={3}>
                     <Stack direction="row" gap={3}>
-                        <TextField fullWidth required id="userName" label="Name" variant={"outlined"} value={signUpForm.userName} onChange={onFormChange}/>
+                        <TextField sx={{borderRadius:"50%"}} fullWidth required id="userName" label="Name" variant={"outlined"} value={signUpForm.userName} onChange={onFormChange}/>
                         <TextField fullWidth required id="userSurname" label="Surname" variant={"outlined"} value={signUpForm.userSurname} onChange={onFormChange}/>
                     </Stack>
                     <TextField required id="userAlias" label="User Name" variant={"outlined"} value={signUpForm.userAlias} onChange={onFormChange}/>
@@ -56,6 +55,7 @@ const SignUp: FC<Props> = () => {
                 </Stack>
             </Box>
             <Button variant="contained" onClick={()=>dispatch(signUpCall(signUpForm))}>Sign up!</Button>
+            <Button variant="contained" onClick={()=>test()}>Test</Button>
         </>
     );
 };

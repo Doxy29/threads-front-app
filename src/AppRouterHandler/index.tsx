@@ -1,8 +1,9 @@
-﻿import Authentication from "src/Pages/Authentication/Authentication";
-import {BrowserRouter as Router, Route, Switch, RouteProps} from "react-router-dom";
+﻿import {BrowserRouter as Router, Route, Switch, RouteProps} from "react-router-dom";
 import {FC, useCallback} from "react";
-import styled from "@emotion/styled";
 import {Container} from "@mui/material";
+import Explore from "src/Pages/Explore";
+import Authentication from "src/Pages/Authentication";
+import Grid2 from "@mui/material/Unstable_Grid2";
 
 interface CustomRouteProps extends RouteProps {
     template?: "default" | "none"
@@ -15,28 +16,28 @@ const CustomRoute: FC<CustomRouteProps> = ({template = "default", ...props}) => 
             switch (temp) {
                 case "default":
                     return (
-                       <Container
-                        sx={{
-                            minHeight: "100%",
-                            maxWidth: "m"
-                        }}
-                       >
+                       <Container maxWidth="sm" sx={{
+                           height: "100%",
+                           overflow: "auto",
+                           "&::-webkit-scrollbar": {
+                               display: "none"
+                           }
+                       }} >
                            <Route {...p} />
                        </Container>
                     );
                 case "none":
-                    return (
-                        <Route {...p} />
-                    );
+                    return <Route {...p} />
+
             }
         }, [])
 
     return (
-        <PageContainer>
+        <Grid2 height="100%" width="100%" justifyContent="center" alignItems="center">
             {
                 switchTemplate(template, props)
             }
-        </PageContainer>
+        </Grid2>
     )
 }
 
@@ -47,34 +48,19 @@ const AppRouterHandler = () => {
             <Switch>
                 <CustomRoute
                     exact
-                    path="/"
-                    children={<Authentication/>}
-                />
-
-                <CustomRoute
-                    exact
-                    path="/explore"
-                    children={<div>Explore</div>}
-                />
-
-                <CustomRoute
-                    exact
-                    path="/auth"
+                    path="/authentication"
                     template="none"
                     children={<Authentication/>}
                 />
 
+                <CustomRoute
+                    exact
+                    path="/"
+                    children={<Explore/>}
+                />
             </Switch>
         </Router>
     )
 };
 
 export default AppRouterHandler;
-
-const PageContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-`

@@ -5,7 +5,6 @@ import SignUp from "src/CommonComponents/Authentication/SignUp.tsx";
 
 const PaperStyles = {
     maxWidth: "700px",
-    width: "100%",
     p:4,
     m:4
 }

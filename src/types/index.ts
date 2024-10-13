@@ -1,13 +1,4 @@
-﻿export type storeStateType = {
-    appTitle: string,
-    user: userType
-}
+﻿import {signInFormType, signUpFormType, userType} from "src/types/AuthenticationTypes.ts"
 
-export type userType = {
-    userId: number,
-    userAlias: string,
-    userName: string,
-    userSurname: string,
-    email : string,
-} | {}
 
+export type {signInFormType, signUpFormType, userType}
